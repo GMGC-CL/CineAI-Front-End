@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-card">
+          <div class="logo">
+            <img src="../../../assets/logo.svg" alt="Logo Cine.AI" class="logo" />
+          </div>
+      
+          <h2>Cadastro</h2>
+      
+          <form class="login-form" #cadastroForm="ngForm" (ngSubmit)="onSubmit(cadastroForm)">
+            <div class="form-group">
+              <label for="nome">Nome:</label>
+              <input type="text" id="nome" name="nome" placeholder="Digite seu nome" ngModel required>
+            </div>
+            
+            <div class="form-group">
+              <label for="email">Email:</label>
+              <input type="email" id="email" name="email" placeholder="Digite seu email" ngModel required>
+            </div>
+            
+            <div class="form-group">
+              <label for="senha">Senha:</label>
+              <input type="password" id="senha" name="senha" placeholder="Digite sua senha" ngModel required>
+            </div>
+      
+            <div class="interests-section">
+              <label>Interesses do perfil:</label>
+              <div class="interests-grid">
+                <div class="interest-option" *ngFor="let genero of generos">
+                  <input type="checkbox" [id]="genero.id" [name]="genero.id" 
+                         (change)="onGeneroChange(genero)" [checked]="genero.selecionado">
+                  <label [for]="genero.id">{{genero.nome}}</label>
+                </div>
+              </div>
+            </div>
+      
+            <button type="submit" class="login-btn" [disabled]="!cadastroForm.valid">Criar perfil</button>
+          </form>
+      
+          <a routerLink="/login" class="cadastro-link">Já possui uma conta? Faça login</a>
+        </div>
+      </div>
+      
+      <!-- Modal de seleção de filmes -->
+      <div class="modal-backdrop" *ngIf="generoSelecionado">
+        <div class="modal-card">
+          <div class="modal-header">
+            <h3>{{generoSelecionado.nome}}</h3>
+            <button class="modal-close" (click)="fecharModal()">&times;</button>
+          </div>
+          
+          <p class="modal-subtitle">Selecione até 3 filmes que você gosta:</p>
+          
+          <div class="movies-grid">
+            <div class="movie-card" *ngFor="let filme of filmesPorGenero" 
+                 [class.selected]="isFilmeSelecionado(filme)"
+                 (click)="toggleFilmeSelecionado(filme)">
+              <div class="movie-poster"></div>
+              <div class="movie-info">
+                <h4>{{filme.titulo}}</h4>
+                <div class="movie-rating">⭐ {{filme.avaliacao.toFixed(1)}}</div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="modal-actions">
+            <button class="confirm-btn" (click)="confirmarFilmes()" 
+                    [disabled]="filmesSelecionados.length === 0">
+              Confirmar ({{filmesSelecionados.length}}/3)
+            </button>
+          </div>
+        </div>
+      </div>
+</body>
+</html>

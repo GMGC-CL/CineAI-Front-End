@@ -1,1 +1,7 @@
-/* You can add global styles to this file, and also import other style files */
+:root {
+    --cor-fundo: #363333;
+    --cor-primaria: #ff39ce;
+    --cor-primaria-hover: #6c345d;
+    --texto-branco: #ffffff;
+    --texto-cinza: #999999;
+  }
