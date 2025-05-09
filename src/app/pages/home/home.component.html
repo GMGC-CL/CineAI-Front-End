@@ -1,1 +1,34 @@
-<p>home works!</p>
+<body>
+  
+  <nav class="navbar">
+    <div class="logo">
+      <img src="../../../assets/logo.svg" alt="Logo Cine.AI" class="logo-img" />
+    </div>
+
+    <div class="nav-right">
+      <div class="menu">
+        <a class="active">Home</a>
+        <a routerLink="/avaliacoes" href="/avaliacoes">Avaliações</a>
+        <a routerLink="/indicacoes" href="/indicacoes">Indicações</a>
+      </div>
+      <div class="profile-circle"></div>
+    </div>
+  </nav>
+
+  <div class="search-container">
+    <input type="text" placeholder="Procurando um filme?" />
+    <button class="search-btn">🔍</button>
+  </div>
+
+  <div class="main-banner"></div>
+
+  <h3 class="section-title">Mais indicações para seu perfil:</h3>
+  <div class="card-row-scroll">
+    <div class="card" *ngFor="let filme of filmesPerfil.slice(0, 8)"></div>
+  </div>
+
+  <h3 class="section-title">Filmes mais indicados da semana:</h3>
+  <div class="card-row-scroll">
+    <div class="card" *ngFor="let filme of filmesSemana.slice(0, 8)"></div>
+  </div>
+</body>
