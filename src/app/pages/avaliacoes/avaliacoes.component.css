@@ -1,0 +1,124 @@
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  background-color: #ffffff;
+  font-family: sans-serif;
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 60px;
+  background-color: #ffffff;
+  border-bottom: 1px solid #ddd;
+}
+
+.logo-img {
+  height: 24px;
+}
+
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+}
+
+.menu {
+  display: flex;
+  gap: 24px;
+}
+
+.menu a {
+  font-size: 14px;
+  text-decoration: none;
+  color: #333;
+  font-weight: 400;
+  transition: color 0.2s;
+  cursor: pointer;
+}
+
+.menu a.active,
+.menu a:hover {
+  color: #d26bff;
+}
+
+.profile-circle {
+  width: 30px;
+  height: 30px;
+  background-color: #ccc;
+  border-radius: 50%;
+}
+
+.avaliacao-container {
+  display: flex;
+  gap: 40px;
+  padding: 40px 60px;
+  color: #111;
+}
+
+.poster {
+  width: 180px;
+  height: 270px;
+  background-color: #ccc;
+  border-radius: 6px;
+}
+
+.conteudo {
+  flex: 1;
+}
+
+.titulo {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.estrela {
+  font-size: 20px;
+  color: #f5c518;
+}
+
+.descricao {
+  margin-bottom: 24px;
+  max-width: 600px;
+}
+
+.nota strong,
+.comentario strong {
+  display: block;
+  margin: 16px 0 8px;
+}
+
+.estrelas span {
+  font-size: 28px;
+  cursor: pointer;
+  color: #ddd;
+}
+
+.estrelas .selecionada {
+  color: #ffc107;
+}
+
+textarea {
+  width: 100%;
+  max-width: 500px;
+  padding: 12px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  resize: none;
+  font-size: 14px;
+  font-family: sans-serif;
+}
+
+.btn-enviar {
+  margin-top: 24px;
+  padding: 12px 24px;
+  background-color: magenta;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 16px;
+}

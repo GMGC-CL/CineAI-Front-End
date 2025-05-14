@@ -1,11 +1,24 @@
 import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-avaliacoes',
-  imports: [],
+  standalone: true,
+  imports: [CommonModule, FormsModule],
   templateUrl: './avaliacoes.component.html',
-  styleUrl: './avaliacoes.component.css'
+  styleUrls: ['./avaliacoes.component.css']
 })
 export class AvaliacoesComponent {
+  notaSelecionada = 0;
+  comentario = '';
 
+  selecionarNota(nota: number): void {
+    this.notaSelecionada = nota;
+  }
+
+  enviarComentario(): void {
+    console.log('Nota:', this.notaSelecionada);
+    console.log('Comentário:', this.comentario);
+  }
 }
