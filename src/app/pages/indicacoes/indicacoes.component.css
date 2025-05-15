@@ -4,6 +4,7 @@ html, body {
   height: 100%;
   background-color: #ffffff;
   font-family: sans-serif;
+  font-weight: 400;
 }
 
 .navbar {
@@ -27,19 +28,22 @@ html, body {
 
 .menu {
   display: flex;
+  align-items: center;
   gap: 24px;
 }
 
 .menu a {
+  font-family: sans-serif;
   font-size: 14px;
   text-decoration: none;
-  color: #333;
+  color: #444;
   font-weight: 400;
+  position: relative;
   transition: color 0.2s;
   cursor: pointer;
 }
 
-.menu a.active,
+.menu a.active, 
 .menu a:hover {
   color: #d26bff;
 }
@@ -51,4 +55,37 @@ html, body {
   border-radius: 50%;
 }
 
+section {
+  padding-left: 10%;
+  padding-right: 10%;
+  margin-bottom: 50px;
+}
 
+section h2 {
+  font-family: sans-serif;
+  font-size: 22px;
+  font-weight: 600;
+  color: #444;
+  margin-bottom: 18px;
+}
+
+.movie-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 18px;
+  justify-content: flex-start;
+}
+
+.movie-card {
+  width: 130px;
+  height: 180px;
+  background-color: #c4c4c4;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.movie-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+}

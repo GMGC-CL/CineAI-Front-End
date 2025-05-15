@@ -1,8 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { IndicacoesComponent } from './indicacoes.component';
 
-describe('IndicacoesComponent', () => {
+describe('LoginComponent', () => {
   let component: IndicacoesComponent;
   let fixture: ComponentFixture<IndicacoesComponent>;
 
