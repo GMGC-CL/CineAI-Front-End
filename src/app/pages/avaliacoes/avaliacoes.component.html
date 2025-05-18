@@ -1,46 +1,43 @@
 <body>
-<nav class="navbar">
-  <div class="logo">
-    <img src="../../../assets/logo.svg" alt="Logo Cine.AI" class="logo-img" />
-  </div>
-
-  <div class="nav-right">
-    <div class="menu">
-      <a routerLink="/home" href="/home">Home</a>
-      <a class="active" routerLink="/avaliacoes" href="/avaliacoes">Avaliações</a>
-      <a routerLink="/indicacoes" href="/indicacoes">Indicações</a>
+  <nav class="navbar">
+    <div class="logo">
+      <img src="../../../assets/logo.svg" alt="Logo Cine.AI" class="logo-img" />
     </div>
-    <div class="profile-circle"></div>
-  </div>
-</nav>
+    <div class="nav-right">
+      <div class="menu">
+        <a routerLink="/home" href="/home">Home</a>
+        <a class="active" routerLink="/avaliacoes" href="/avaliacoes">Avaliações</a>
+        <a routerLink="/indicacoes" href="/indicacoes">Indicações</a>
+      </div>
+      <div class="profile-circle"></div>
+    </div>
+  </nav>
 
-<div class="avaliacao-container">
-  <div class="filme-info">
-    <div class="filme-img"></div>
-    <div class="filme-texto">
-      <h2>Nosferatu <span class="estrela">⭐</span> 4,2</h2>
-      <p>Uma jovem noiva é deixada sob os cuidados de amigas quando seu marido viaja para a Transilvânia
-        para um encontro com o Conde Orlok. Aumentando por vezes fáceis e uma crescente sensação de pavor,
-        ela logo encontra uma força maligna que está muito além de sua compreensão.</p>
+  <div class="avaliacao-container">
+    <div class="poster"></div>
+    <div class="conteudo">
+      <h2 class="titulo">Nosferatu <span class="estrela">⭐</span> 4,2</h2>
+      <p class="descricao">
+        Uma jovem noiva é deixada sob os cuidados de amigas quando seu marido viaja para a Transilvânia para um encontro com o Conde Orlok. Atormentada por visões terríveis e uma crescente sensação de pavor, ela logo encontra uma força maligna que está muito além de sua compreensão.
+      </p>
     </div>
   </div>
 
-  <div class="nota-section">
-    <h3>Sua nota:</h3>
-    <div class="estrelas">
-      <span *ngFor="let star of [1,2,3,4,5]" (click)="selecionarNota(star)">
-        <img
-          [src]="notaSelecionada >= star ? '../../../assets/star-filled.svg' : '../../../assets/star-empty.svg'"
-          class="estrela-icon" />
-      </span>
+  <div class="feedback-container">
+    <div class="nota">
+      <strong>Sua nota:</strong>
+      <div class="estrelas">
+        <span *ngFor="let star of [1,2,3,4,5]" (click)="selecionarNota(star)" [class.selecionada]="notaSelecionada >= star">
+          ★
+        </span>
+      </div>
     </div>
-  </div>
 
-  <div class="comentario-section">
-    <h3>Seu comentário:</h3>
-    <textarea [(ngModel)]="comentario" rows="5" placeholder="Escreva aqui..."></textarea>
-  </div>
+    <div class="comentario">
+      <strong>Seu comentário:</strong>
+      <textarea [(ngModel)]="comentario" rows="5" placeholder="Escreva aqui..."></textarea>
+    </div>
 
-  <button class="enviar-btn" (click)="enviarComentario()">Enviar</button>
-</div>
+    <button class="btn-enviar" (click)="enviarComentario()">Enviar</button>
+  </div>
 </body>

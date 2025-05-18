@@ -70,35 +70,53 @@ html, body {
 }
 
 .titulo {
-  font-size: 24px;
+  font-size: 32px;
   font-weight: bold;
-  margin-bottom: 10px;
+  margin-bottom: 16px;
 }
 
 .estrela {
-  font-size: 20px;
-  color: #f5c518;
+  font-size: 28px;
+  color: #ffc107;
 }
 
 .descricao {
   margin-bottom: 24px;
   max-width: 600px;
+  line-height: 1.6;
 }
 
 .nota strong,
 .comentario strong {
   display: block;
   margin: 16px 0 8px;
+  font-size: 18px;
 }
 
 .estrelas span {
-  font-size: 28px;
+  font-size: 32px;
   cursor: pointer;
-  color: #ddd;
+  color: #555;
+  transition: color 0.2s;
 }
 
-.estrelas .selecionada {
+
+.estrelas span.selecionada {
   color: #ffc107;
+}
+
+
+.estrelas.sem-selecao span {
+  color: #ccc;
+  cursor: default;
+}
+
+
+.feedback-sem-avaliacao {
+  font-style: italic;
+  color: #999;
+  font-size: 16px;
+  margin-top: 16px;
 }
 
 textarea {
@@ -108,7 +126,7 @@ textarea {
   border-radius: 6px;
   border: 1px solid #ccc;
   resize: none;
-  font-size: 14px;
+  font-size: 16px;
   font-family: sans-serif;
 }
 
@@ -120,5 +138,15 @@ textarea {
   border: none;
   border-radius: 6px;
   cursor: pointer;
-  font-size: 16px;
+  font-size: 18px;
+  transition: background-color 0.3s;
+}
+
+.btn-enviar:hover {
+  background-color: #d200d2;
+}
+
+.feedback-container {
+  padding: 0 60px 40px 60px;
+  color: #111;
 }

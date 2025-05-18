@@ -18,7 +18,10 @@ export class AvaliacoesComponent {
   }
 
   enviarComentario(): void {
-    console.log('Nota:', this.notaSelecionada);
-    console.log('Comentário:', this.comentario);
+    if (this.notaSelecionada === 0 || this.comentario.trim() === '') {
+      alert('Por favor, selecione uma nota e escreva um comentário.');
+      return;
+    }
+
   }
 }
