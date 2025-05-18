@@ -22,6 +22,5 @@ export class AvaliacoesComponent {
       alert('Por favor, selecione uma nota e escreva um comentário.');
       return;
     }
-
   }
 }
