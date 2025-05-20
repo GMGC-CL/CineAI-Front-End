@@ -1,11 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
+
     <div class="login-container">
         <div class="login-card">
           <div class="logo">
@@ -61,11 +54,11 @@
           <div class="movies-grid">
             <div class="movie-card" *ngFor="let filme of filmesPorGenero" 
                  [class.selected]="isFilmeSelecionado(filme)"
-                 (click)="toggleFilmeSelecionado(filme)">
-              <div class="movie-poster"></div>
+                 (click)="toggleFilmeSelecionado(filme)"  >
+              <div class="movie-poster"[ngStyle]="{'background-image': 'url(' + 'https://image.tmdb.org/t/p/w500' + filme.caminho_poster + ')', 'background-size': 'cover', 'background-position': 'center'}"></div>
               <div class="movie-info">
                 <h4>{{filme.titulo}}</h4>
-                <div class="movie-rating">⭐ {{filme.avaliacao.toFixed(1)}}</div>
+                <div class="movie-rating">⭐ {{filme.media_votos}}</div>
               </div>
             </div>
           </div>
@@ -78,5 +71,3 @@
           </div>
         </div>
       </div>
-</body>
-</html>

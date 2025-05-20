@@ -1,25 +1,22 @@
-<!DOCTYPE html>
-<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  <meta charset="utf-8">
+  <title>CineAI</title>
+  <base href="/">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/x-icon" href="../../../favicon.ico">
 </head>
-<body>
-  <div class="login-container">
-    <div class="login-card">
-      <img src="../../../assets/logo.svg" alt="Logo Cine.AI" class="logo" />
-      
-      <h2>Login</h2>
+<div class="login-container">
+  <div class="login-card">
+    <img src="../../../assets/logo.svg" alt="Logo Cine.AI" class="logo" />
+    
+    <h2>Login</h2>
 
-<form (ngSubmit)="onSubmit()">
-  <input type="email" [(ngModel)]="email" name="email" required />
-  <input type="password" [(ngModel)]="password" name="password" required />
-  <button type="submit">Entrar</button>
-</form>
-      
-      <p class="cadastro-link">Não possui uma conta? <a routerLink="/cadastro" href="/cadastro">Cadastre-se</a></p>
-    </div>
+    <form (ngSubmit)="onSubmit()">
+      <input type="email" [(ngModel)]="email" name="email" required />
+      <input type="password" [(ngModel)]="password" name="password" required />
+      <button type="submit">Entrar</button>
+    </form>
+    
+    <p class="cadastro-link">Não possui uma conta? <a routerLink="/cadastro" href="/cadastro">Cadastre-se</a></p>
   </div>
-</body>
-</html>
+</div>
