@@ -3,9 +3,6 @@ import { FormsModule, NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ApiService } from '../../services/api.service';
 
-
-
-
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',

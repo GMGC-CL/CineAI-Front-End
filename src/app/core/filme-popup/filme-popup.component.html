@@ -1,0 +1,26 @@
+<div class="popup-overlay" *ngIf="visible" (click)="close()">
+  <div class="popup-content" (click)="$event.stopPropagation()">
+    <h2 class="titulo">{{ filmeTitulo }} <span class="estrela">⭐</span> 4,2</h2>
+    <p class="descricao">{{ filmeDescricao }}</p>
+
+    <div class="feedback-container">
+      <div class="nota">
+        <strong>Sua nota:</strong>
+        <div class="estrelas">
+          <span *ngFor="let star of [1,2,3,4,5]" (click)="selecionarNota(star)" [class.selecionada]="notaSelecionada >= star">
+            ★
+          </span>
+        </div>
+      </div>
+
+      <div class="comentario">
+        <strong>Seu comentário:</strong>
+        <textarea [(ngModel)]="comentario" rows="5" placeholder="Escreva aqui..."></textarea>
+      </div>
+
+      <button class="btn-enviar" (click)="enviarComentario()">Enviar</button>
+    </div>
+
+    <button (click)="close()">Fechar</button>
+  </div>
+</div>

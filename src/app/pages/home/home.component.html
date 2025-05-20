@@ -22,13 +22,21 @@
 
   <div class="main-banner"></div>
 
+  <app-filme-popup #popup></app-filme-popup>
+
   <h3 class="section-title">Mais indicações para seu perfil:</h3>
   <div class="card-row-scroll">
-    <div class="card" *ngFor="let filme of filmesPerfil.slice(0, 8)"></div>
+    <div class="card" *ngFor="let filme of filmesPerfil.slice(0, 8)" (click)="abrirPopup(filme)">
+      <h4>{{ filme.titulo }}</h4>
+      <p>{{ filme.descricao }}</p>
+    </div>
   </div>
 
   <h3 class="section-title">Filmes mais indicados da semana:</h3>
   <div class="card-row-scroll">
-    <div class="card" *ngFor="let filme of filmesSemana.slice(0, 8)"></div>
+    <div class="card" *ngFor="let filme of filmesSemana.slice(0, 8)" (click)="abrirPopup(filme)">
+      <h4>{{ filme.titulo }}</h4>
+      <p>{{ filme.descricao }}</p>
+    </div>
   </div>
 </body>
