@@ -8,7 +8,7 @@ export interface Genero {
 }
 
 export interface Filme {
-  id_filme_tmdb: number;
+  id_filme_tmdb: string;
   titulo: string;
   genero: string;
   media_votos: number;

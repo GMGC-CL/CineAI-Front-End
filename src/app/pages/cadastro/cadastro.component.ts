@@ -5,7 +5,8 @@ import { RouterModule } from '@angular/router';
 import { ApiService, } from '../../services/api.service';
 import { Router } from '@angular/router';
 import { CadastroService,Filme,Genero } from '../../services/cadastro.services';
-
+import { forkJoin } from 'rxjs';
+import { EstadoService } from '../../services/estado.service';
 
 
 @Component({
@@ -21,9 +22,10 @@ export class CadastroComponent {
   filmesSelecionados: Filme[];
 
 
-  constructor(private router: Router,private  MovieService: ApiService, private cadastroService: CadastroService) {
+  constructor(private router: Router,private  MovieService: ApiService, private cadastroService: CadastroService,private estadoService: EstadoService) {
     this.generos = this.cadastroService.generos;
     this.filmesSelecionados = this.cadastroService.filmesSelecionados;
+    this.estadoService.dadosPagina = null;
   }
 
 
@@ -85,41 +87,63 @@ export class CadastroComponent {
     this.filmesSelecionados = [];
   }
 
-  onSubmit(form: NgForm): void {
-    if (form.valid) {
-      const dadosCadastro = {
-        nome: form.value.nome,
-        email: form.value.email,
-        senha: form.value.senha,
-        generosPreferidos: this.generos.filter(g => g.selecionado),
-        filmesPreferidos: this.getTodosFilmesSelecionados()
-      };
-
-         this.cadastroService.dadosCadastro = dadosCadastro;
-
-        let nome = form.value.nome;
-        let email = form.value.email;
-        let senha = form.value.senha;
-      //pega todos os filmes e pesquisa a similaridade
-        this.MovieService.registrar(nome,email,senha).subscribe({
-        next: (response: Filme[]) => {
-           this.router.navigate(['/home']);
-        },
-        error: (err) => {
-          console.error('Erro ao buscar filmes:', err);
-          this.filmesPorGenero = [];
-        }
-      });
 
 
+onSubmit(form: NgForm): void {
+  if (form.valid) {
+    const dadosCadastro = {
+      nome: form.value.nome,
+      email: form.value.email,
+      senha: form.value.senha,
+      idUser: "",
+      generosPreferidos: this.generos.filter(g => g.selecionado),
+      filmesPreferidos: this.getTodosFilmesSelecionados()
+    };
 
+    this.MovieService.registrar(dadosCadastro.nome, dadosCadastro.email, dadosCadastro.senha).subscribe({
+      next: () => {
+        this.MovieService.login(dadosCadastro.email, dadosCadastro.senha).subscribe({
+          next: (loginResponse) => {
+            dadosCadastro.idUser = loginResponse.id;
+            // Criar array de observables para filmes
+            const filmesRequests = dadosCadastro.filmesPreferidos.map(filme =>
+              this.MovieService.put_preference(dadosCadastro.idUser, filme.id_filme_tmdb)
+            );
 
+            // Criar array de observables para gêneros
+            const generosRequests = dadosCadastro.generosPreferidos.map(genero =>
+              this.MovieService.put_genre_preference(dadosCadastro.idUser, genero.id)
+            );
 
+            // Juntar todas as requisições (filmes + gêneros)
+            const todasRequisicoes = [...filmesRequests, ...generosRequests];
 
-      console.log('Dados do cadastro:', dadosCadastro);
-      // Aqui você pode adicionar a lógica para enviar os dados
-    }
+            forkJoin(todasRequisicoes).subscribe({
+              next: (respostas) => {
+                this.cadastroService.dadosCadastro = dadosCadastro
+                console.log('Todos os gêneros e filmes foram registrados com sucesso:', respostas);
+                this.router.navigate(['/home']);
+              },
+              error: (erro) => {
+                console.error('Erro ao registrar gêneros ou filmes:', erro);
+                alert('Erro ao registrar suas preferências. Tente novamente.');
+              }
+            });
+          },
+          error: (err) => {
+            console.error('Erro no login:', err);
+            alert('Erro ao fazer login após registro.');
+          }
+        });
+      },
+      error: (err) => {
+        console.error('Erro no registro:', err);
+        alert('Erro ao registrar usuário.');
+      }
+    });
   }
+}
+
 
   private getTodosFilmesSelecionados(): Filme[] {
     return this.generos

@@ -1,5 +1,4 @@
-<body>
-  
+
   <nav class="navbar">
     <div class="logo">
       <img src="../../../assets/logo.svg" alt="Logo Cine.AI" class="logo-img" />
@@ -15,20 +14,62 @@
     </div>
   </nav>
 
-  <div class="search-container">
-    <input type="text" placeholder="Procurando um filme?" />
-    <button class="search-btn">🔍</button>
-  </div>
+<div class="search-container">
+  <input type="text" placeholder="Procurando um filme?" [(ngModel)]="searchQuery" />
+  <button class="search-btn" (click)="buscarFilmes()">🔍</button>
+</div>
 
   <div class="main-banner"></div>
 
-  <h3 class="section-title">Mais indicações para seu perfil:</h3>
-  <div class="card-row-scroll">
-    <div class="card" *ngFor="let filme of filmesPerfil.slice(0, 8)"></div>
-  </div>
 
-  <h3 class="section-title">Filmes mais indicados da semana:</h3>
-  <div class="card-row-scroll">
-    <div class="card" *ngFor="let filme of filmesSemana.slice(0, 8)"></div>
+  <div *ngIf="pesquisando">
+  <h3 class="section-title">Resultados da pesquisa:</h3>
+  <div class="carousel-container">
+    <button class="scroll-btn left" (click)="scrollLeft('pesquisa')">‹</button>
+    <div class="card-row-scroll"id="pesquisa">
+      <div class="card" *ngFor="let filme of filmesEncontrados"
+        [ngStyle]="{'background-image': 'url(' + 'https://image.tmdb.org/t/p/w500' + filme.caminho_poster + ')', 'background-size': 'cover', 'background-position': 'center'}">
+      </div>
+    </div>
+    <button class="scroll-btn right" (click)="scrollRight('pesquisa')">›</button>
   </div>
-</body>
+</div>
+
+
+
+<h3 class="section-title"*ngIf="!pesquisando">Mais indicações para seu perfil:</h3>
+<div class="carousel-container"*ngIf="!pesquisando">
+  <button class="scroll-btn left" (click)="scrollLeft('perfil')">‹</button>
+  <div class="card-row-scroll" id="perfil">
+    <div class="card"  *ngFor="let filme of filmesIndicados"
+    [ngStyle]="{'background-image': 'url(' + 'https://image.tmdb.org/t/p/w500' + filme.caminho_poster + ')', 'background-size': 'cover', 'background-position': 'center'}">
+      <!-- conteúdo do card -->
+    </div>
+  </div>
+  <button class="scroll-btn right" (click)="scrollRight('perfil')">›</button>
+</div>
+
+<h3 class="section-title"*ngIf="!pesquisando">Seus gêneros favoritos:</h3>
+<div class="carousel-container"*ngIf="!pesquisando">
+  <button class="scroll-btn left" (click)="scrollLeft('semana')">‹</button>
+  <div class="card-row-scroll" id="semana">
+    <div class="card"  *ngFor="let filme of filmesGeneros" 
+    [ngStyle]="{'background-image': 'url(' + 'https://image.tmdb.org/t/p/w500' + filme.caminho_poster + ')', 'background-size': 'cover', 'background-position': 'center'}">
+      <!-- conteúdo do card -->
+    </div>
+  </div>
+  <button class="scroll-btn right" (click)="scrollRight('semana')">›</button>
+</div>
+
+<h3 class="section-title"*ngIf="!pesquisando">Em alta:</h3>
+<div class="carousel-container"*ngIf="!pesquisando">
+  <button class="scroll-btn left" (click)="scrollLeft('tops')">‹</button>
+  <div class="card-row-scroll" id="tops">
+    <div class="card"  *ngFor="let filme of filmesTops" 
+    [ngStyle]="{'background-image': 'url(' + 'https://image.tmdb.org/t/p/w500' + filme.caminho_poster + ')', 'background-size': 'cover', 'background-position': 'center'}">
+      <!-- conteúdo do card -->
+    </div>
+  </div>
+  <button class="scroll-btn right" (click)="scrollRight('tops')">›</button>
+</div>
+

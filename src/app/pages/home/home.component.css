@@ -89,7 +89,9 @@ html, body {
   width: 80%;
   margin: 0 auto 50px;
   height: 260px;
-  background-color: #c4c4c4;
+  background-image: url('../../../assets/Banner\ 3.jpg');
+  background-size: cover; 
+  background-position: center;
   border-radius: 8px;
 }
 
@@ -103,11 +105,15 @@ h3.section-title {
 
 .card-row-scroll {
   display: flex;
-  justify-content: center;
   gap: 18px;
-  margin: 0 0 50px;
-  flex-wrap: wrap;
-  padding: 0 10%;
+  margin: 0 10% 50px;
+  padding: 0;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.card-row-scroll::-webkit-scrollbar {
+  display: none;
 }
 
 .card {
@@ -116,4 +122,45 @@ h3.section-title {
   background-color: #c4c4c4;
   border-radius: 8px;
   box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+}
+.carousel-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+
+.card {
+  flex: 0 0 auto; /* ✅ Impede quebra dentro do flex */
+  min-width: 200px;
+  height: 300px;
+  background-color: #ccc;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+}
+
+
+.scroll-btn {
+  background-color: transparent;
+  border: none;
+  font-size: 2rem;
+  cursor: pointer;
+  z-index: 1;
+  padding: 0 1rem;
+  color: #444;
+}
+
+.scroll-btn.left {
+  margin-right: -2rem;
+}
+
+.scroll-btn.right {
+  margin-left: -2rem;
+}
+
+.card:hover {
+  border-radius: 10px;
+  transform: scale(1.05);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.2);
 }
