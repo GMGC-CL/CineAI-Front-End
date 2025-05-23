@@ -122,7 +122,7 @@ onSubmit(form: NgForm): void {
               next: (respostas) => {
                 this.cadastroService.dadosCadastro = dadosCadastro
                 console.log('Todos os gêneros e filmes foram registrados com sucesso:', respostas);
-                this.router.navigate(['/home']);
+                this.router.navigate(['/login']);
               },
               error: (erro) => {
                 console.error('Erro ao registrar gêneros ou filmes:', erro);
