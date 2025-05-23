@@ -1,26 +1,42 @@
 <div class="popup-overlay" *ngIf="visible" (click)="close()">
   <div class="popup-content" (click)="$event.stopPropagation()">
-    <h2 class="titulo">{{ filmeTitulo }} <span class="estrela">⭐</span> 4,2</h2>
-    <p class="descricao">{{ filmeDescricao }}</p>
-
-    <div class="feedback-container">
-      <div class="nota">
-        <strong>Sua nota:</strong>
-        <div class="estrelas">
-          <span *ngFor="let star of [1,2,3,4,5]" (click)="selecionarNota(star)" [class.selecionada]="notaSelecionada >= star">
-            ★
-          </span>
+    <div class="filme-info-grid">
+      <img class="capa" [src]="filmeCapa" alt="Capa do Filme" />
+      
+      <div class="descricao-wrapper">
+        <div class="titulo-nota-row">
+          <h2 class="titulo">{{ filmeTitulo }}</h2>
+          <p class="nota"><span class="estrela">⭐</span> {{ filmeNota | number:'1.1-1'}}</p>
         </div>
+        <p class="descricao">{{ filmeDescricao }}</p>
       </div>
-
-      <div class="comentario">
-        <strong>Seu comentário:</strong>
-        <textarea [(ngModel)]="comentario" rows="5" placeholder="Escreva aqui..."></textarea>
-      </div>
-
-      <button class="btn-enviar" (click)="enviarComentario()">Enviar</button>
     </div>
 
-    <button (click)="close()">Fechar</button>
+    <div class="avaliacoes">
+      <div *ngFor="let avaliacao of avaliacoes">
+        
+        <p><strong>Sua Nota:</strong></p>
+        <div class="star-rating">
+          <span 
+            *ngFor="let star of [1, 2, 3, 4, 5]" 
+            (click)="avaliacao.nota = star"
+            [class.filled]="star <= avaliacao.nota"
+            class="star"
+          >
+            ★
+          </span>
+          <span class="nota-num">{{ avaliacao.nota }}/5</span>
+        </div>
+
+        <p><strong>Seu Comentário:</strong></p>
+        <textarea class="custom-textarea" [(ngModel)]="avaliacao.comentario" rows="3"></textarea>
+
+      </div>
+    </div>
+
+    <div class="button-container">
+      <button (click)="salvarAvaliacao()">Salvar</button>
+      <button (click)="close()">Fechar</button>
+    </div>
   </div>
 </div>

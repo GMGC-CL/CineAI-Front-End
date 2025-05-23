@@ -5,3 +5,9 @@
     --texto-branco: #ffffff;
     --texto-cinza: #999999;
   }
+
+body,html {
+  margin: 0;
+  padding: 0;
+  background-color: #363333;
+}

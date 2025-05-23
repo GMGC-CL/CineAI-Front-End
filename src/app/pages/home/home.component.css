@@ -11,12 +11,12 @@ html, body {
   justify-content: space-between;
   align-items: center;
   padding: 20px 60px;
-  background-color: #363333;
+  background-color: #2c2a2a;
   border-bottom: 1px solid #444;
 }
 
 .logo-img {
-  height: 24px;
+  height: 50px;
 }
 
 .nav-right {
@@ -27,12 +27,13 @@ html, body {
 
 .menu {
   display: flex;
+  align-items: center;
   gap: 24px;
 }
 
 .menu a {
   font-family: sans-serif;
-  font-size: 14px;
+  font-size: 18px;
   text-decoration: none;
   color: #ccc;
   font-weight: 400;
@@ -54,7 +55,7 @@ html, body {
 .profile-circle {
   width: 30px;
   height: 30px;
-  background-color: #ccc;
+  background-image: url('../../../assets/user_icon.svg');
   border-radius: 50%;
 }
 
@@ -88,8 +89,10 @@ html, body {
 .main-banner {
   width: 80%;
   margin: 0 auto 50px;
-  height: 260px;
-  background-color: #c4c4c4;
+  height: 280px;
+  background-image: url('../../../assets/Banner\ 3.jpg');
+  background-size: cover; 
+  background-position: center;
   border-radius: 8px;
 }
 
@@ -103,11 +106,15 @@ h3.section-title {
 
 .card-row-scroll {
   display: flex;
-  justify-content: center;
   gap: 18px;
-  margin: 0 0 50px;
-  flex-wrap: wrap;
-  padding: 0 10%;
+  margin: 0 10% 50px;
+  padding: 0;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.card-row-scroll::-webkit-scrollbar {
+  display: none;
 }
 
 .card {
@@ -116,4 +123,44 @@ h3.section-title {
   background-color: #c4c4c4;
   border-radius: 8px;
   box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+}
+.carousel-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+
+.card {
+  flex: 0 0 auto; /* ✅ Impede quebra dentro do flex */
+  min-width: 200px;
+  height: 300px;
+  background-color: #ccc;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+}
+
+.scroll-btn {
+  background-color: transparent;
+  border: none;
+  font-size: 2rem;
+  cursor: pointer;
+  z-index: 1;
+  padding: 0 1rem;
+  color: #444;
+}
+
+.scroll-btn.left {
+  margin-right: -2rem;
+}
+
+.scroll-btn.right {
+  margin-left: -2rem;
+}
+
+.card:hover {
+  border-radius: 10px;
+  transform: scale(1.05);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.2);
 }

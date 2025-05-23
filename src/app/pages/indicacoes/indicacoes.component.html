@@ -1,4 +1,4 @@
-<body>
+
   <nav class="navbar">
     <div class="logo">
       <img src="../../../assets/logo.svg" alt="Logo Cine.AI" class="logo-img" />
@@ -9,29 +9,36 @@
         <a routerLink="/home" href="/home">Home</a>
         <a routerLink="/avaliacoes" href="/avaliacoes">Avaliações</a>
         <a class="active" routerLink="/indicacoes" href="/indicacoes">Indicações</a>
+        <a (click)="logout()">Sair</a>
       </div>
-      <div class="profile-circle"></div>
     </div>
   </nav>
 
   <section>
     <h2>Filmes com maior match para seu perfil:</h2>
     <div class="movie-grid">
-      <div class="movie-card" *ngFor="let movie of perfilMatches"></div>
+      <div class="movie-card" *ngFor="let filme of filmesIndicados" (click)="abrirPopup(filme)"
+    [ngStyle]="{'background-image': 'url(' + 'https://image.tmdb.org/t/p/w500' + filme.caminho_poster + ')', 'background-size': 'cover', 'background-position': 'center'}">
+      <!-- conteúdo do card -->></div>
     </div>
   </section>
 
   <section>
     <h2>Filmes com seu gênero favorito:</h2>
     <div class="movie-grid">
-      <div class="movie-card" *ngFor="let movie of generoFav"></div>
+      <div class="movie-card" *ngFor="let filme of filmesGeneros" (click)="abrirPopup(filme)"
+    [ngStyle]="{'background-image': 'url(' + 'https://image.tmdb.org/t/p/w500' + filme.caminho_poster + ')', 'background-size': 'cover', 'background-position': 'center'}"></div>
     </div>
   </section>
 
   <section>
     <h2>Mais indicações relacionadas:</h2>
     <div class="movie-grid">
-      <div class="movie-card" *ngFor="let movie of recomendacaoRelaci"></div>
+      <div class="movie-card" *ngFor="let filme of filmesTops" (click)="abrirPopup(filme)"
+        [ngStyle]="{'background-image': 'url(' + 'https://image.tmdb.org/t/p/w500' + filme.caminho_poster + ')', 
+        'background-size': 'cover', 'background-position': 'center'}">
+      </div>
     </div>
   </section>
-</body>
+
+  <app-filme-popup #popup></app-filme-popup>
