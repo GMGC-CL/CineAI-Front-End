@@ -30,12 +30,11 @@ export class FilmePopupComponent {
 
   open(filmeId: string, dados: any): void {
     this.filmeId = filmeId;
-    this.dados = dados.user;
+    this.dados = dados.idUser;
     this.visible = true;
     console.log(this.filmeId);
     console.log(this.dados);
-
-
+   
     // Buscar detalhes do filme
     this.apiService.get_film_by_id(filmeId).subscribe({
       next: (filmes: any[]) => {

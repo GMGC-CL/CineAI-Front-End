@@ -1,79 +1,92 @@
 import { Injectable } from '@angular/core';
-import { HttpClient,HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-
 
 @Injectable({
   providedIn: 'root'
 })
 export class ApiService {
-  private url = 'https://cineai-njbu.onrender.com/usuarios/registrar'; // URL da sua API
+  private baseUrl = 'https://cineai-api.onrender.com';
 
   constructor(private http: HttpClient) {}
-  //logar conseguir token e id do usuario
+
+  // login
   login(email: string, senha: string): Observable<any> {
-    const body = { email, senha};
-    return this.http.post<any>('https://cineai-njbu.onrender.com/usuarios/login', body);
+    const body = { email, senha };
+    return this.http.post<any>(`${this.baseUrl}/usuarios/login`, body);
   }
 
-  //registrar um novo usuario
-  registrar(nome:string,email: string, senha: string): Observable<any> {
+  // registrar
+  registrar(nome: string, email: string, senha: string): Observable<any> {
     const body = { nome, email, senha };
-    return this.http.post<any>(this.url, body);
+    return this.http.post<any>(`${this.baseUrl}/usuarios/registrar`, body);
   }
-  //pegar filmes filtrados por generos
-  get_filme_genre(genre_id:string , limit:string): Observable<any> {
-    return this.http.get<any>(`https://cineai-njbu.onrender.com/movies/genre/${genre_id}?limit=${limit}`);
+
+  // filmes por gênero
+  get_filme_genre(genre_id: string, limit: string): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl}/movies/genre/${genre_id}?limit=${limit}`);
   }
-  //guarda as preferencias do usuario através do id
-  put_preference(usuario_id:string , filme_id:string): Observable<any> {
+
+  // salvar preferências de filme
+  put_preference(usuario_id: string, filme_id: string): Observable<any> {
     const body = { usuario_id, filme_id };
-    return this.http.post<any>(`https://cineai-njbu.onrender.com/movies/preferencia`,body);
+    return this.http.post<any>(`${this.baseUrl}/movies/preferencia`, body);
   }
-  put_genre_preference(usuario_id:string , genero_id:string): Observable<any> {
+
+  // salvar preferências de gênero
+  put_genre_preference(usuario_id: string, genero_id: string): Observable<any> {
     const body = { usuario_id, genero_id };
-    return this.http.post<any>(`https://cineai-njbu.onrender.com/movies/genero/preferencia`,body);
+    return this.http.post<any>(`${this.baseUrl}/movies/genero/preferencia`, body);
   }
-  //pegas as preferencias do usuario
-  get_preference(user_id:string): Observable<any> {
-    return this.http.get<any>(`https://cineai-njbu.onrender.com/preferencias/${user_id}`);
+
+  // obter preferências de filmes
+  get_preference(user_id: string): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl}/preferencias/${user_id}`);
   }
-    //pegas as preferencias do usuario
-  get_genre_preference(user_id:string): Observable<any> {
-    return this.http.get<any>(`https://cineai-njbu.onrender.com/preferencias/genero/${user_id}`);
+
+  // obter preferências de gêneros
+  get_genre_preference(user_id: string): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl}/preferencias/genero/${user_id}`);
   }
-  //pega um filme similar de acordo com o id de um filme
-  get_similar(filme_id:number, limit:number): Observable<any> {
-    return this.http.get<any>(`https://cineai-njbu.onrender.com/movies/${filme_id}/similar?limit=${limit}`);
+
+  // filmes similares
+  get_similar(filme_id: number, limit: number): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl}/movies/${filme_id}/similar?limit=${limit}`);
   }
-  //pegar filme por genero
-  get_film_genre(genre_id:number, limit:number): Observable<any> {
-    return this.http.get<any>(`https://cineai-njbu.onrender.com/movies/genre/${genre_id}?limit=${limit}`);
+
+  // filmes por gênero
+  get_film_genre(genre_id: number, limit: number): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl}/movies/genre/${genre_id}?limit=${limit}`);
   }
-    //pegar filme por genero
+
+  // todos os filmes
   get_film(): Observable<any> {
-    return this.http.get<any>(`https://cineai-njbu.onrender.com/movies?limit=24`);
-  }
-    //pegar filme por genero
-  get_film_name(filme_nome:string): Observable<any> {
-    return this.http.get<any>(`https://cineai-njbu.onrender.com/movies/name/${filme_nome}`);
+    return this.http.get<any>(`${this.baseUrl}/movies?limit=24`);
   }
 
-  //pegar filme por id
-  get_film_by_id(filme_id:string): Observable<any> {
-    return this.http.get<any>(`https://cineai-njbu.onrender.com/movies/${filme_id}`);
+  // buscar filme por nome
+  get_film_name(filme_nome: string): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl}/movies/name/${filme_nome}`);
   }
 
-  //pegar avaliações do filme
-  get_rates(filme_id:string): Observable<any> {
-    return this.http.get<any>(`https://cineai-njbu.onrender.com/movies/${filme_id}/avaliacoes`);
+  // buscar filme por ID
+  get_film_by_id(filme_id: string): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl}/movies/${filme_id}`);
   }
 
-  //atualizar avaliações do filme
+  // obter avaliações do filme
+  get_rates(filme_id: string): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl}/movies/${filme_id}/avaliacoes`);
+  }
+
+  // enviar avaliação do usuário
   post_rate_user(filme_id: string, usuario_id: string, nota: number, comentario: string): Observable<any> {
-    const body = {usuario_id: usuario_id, nota: nota, comentario: comentario};
-
-    return this.http.post<any>(`https://cineai-njbu.onrender.com/movies/${filme_id}/avaliar`, body);
+    const body = { usuario_id, nota, comentario };
+    return this.http.post<any>(`${this.baseUrl}/movies/${filme_id}/avaliar`, body);
   }
 
+  // buscar todas as avaliações de um usuário
+  get_avaliacoes_usuario(user_id: number): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl}/usuarios/${user_id}/avaliacoes`,);
+  }
 }

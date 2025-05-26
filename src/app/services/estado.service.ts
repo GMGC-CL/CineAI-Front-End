@@ -3,7 +3,6 @@ import { isPlatformBrowser } from '@angular/common';
 
 @Injectable({ providedIn: 'root' })
 export class EstadoService {
-
   private storageKey = 'dadosPagina';
   private isBrowser: boolean;
 
@@ -19,7 +18,11 @@ export class EstadoService {
     return null;
   }
 
-  set dadosPagina(valor: { filmesIndicados?: any[], filmesGeneros?: any[], filmesTops?: any[] } | null) {
+  set dadosPagina(valor: { 
+    filmesIndicados?: any[], 
+    filmesGeneros?: any[], 
+    filmesTops?: any[],
+  } | null) {
     if (this.isBrowser) {
       if (valor) {
         localStorage.setItem(this.storageKey, JSON.stringify(valor));

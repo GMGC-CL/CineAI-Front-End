@@ -18,7 +18,9 @@
     <h2>Filmes com maior match para seu perfil:</h2>
     <div class="movie-grid">
       <div class="movie-card" *ngFor="let filme of filmesIndicados" (click)="abrirPopup(filme)"
-    [ngStyle]="{'background-image': 'url(' + 'https://image.tmdb.org/t/p/w500' + filme.caminho_poster + ')', 'background-size': 'cover', 'background-position': 'center'}">
+    [ngStyle]="{'background-image': 'url(' + 'https://image.tmdb.org/t/p/w500' + filme.caminho_poster + ')', 
+      'background-size': 'cover', 
+      'background-position': 'center'}">
       <!-- conteúdo do card -->></div>
     </div>
   </section>

@@ -1,25 +1,16 @@
-import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, Inject, PLATFORM_ID, ViewChild } from '@angular/core';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
+import { Router } from '@angular/router';
+import { Observable, forkJoin } from 'rxjs';
 import { EstadoService } from '../../services/estado.service';
 import { CadastroService, Filme, Genero } from '../../services/cadastro.services';
-import { Inject, PLATFORM_ID } from '@angular/core';
-import { isPlatformBrowser } from '@angular/common';
-import { Observable, forkJoin } from 'rxjs';
 import { ApiService } from '../../services/api.service';
-import { Router, NavigationEnd } from '@angular/router';
-import { ViewChild } from '@angular/core';
-import { FilmePopupComponent } from '../../core/filme-popup/filme-popup.component'; 
+import { FilmePopupComponent } from '../../core/filme-popup/filme-popup.component';
 
 interface DadosPagina {
   filmesIndicados: Filme[];
   filmesGeneros: Filme[];
   filmesTops: Filme[];
-  filmesAvaliados: Filme[];
-}
-
-interface PreferenciaFilme {
-  filme_id: number;
-  usuario_id: number;
 }
 
 @Component({
@@ -29,94 +20,102 @@ interface PreferenciaFilme {
   templateUrl: './avaliacoes.component.html',
   styleUrls: ['./avaliacoes.component.css'],
 })
-
 export class AvaliacoesComponent {
-  generos: Genero[];
-  filmesSelecionados: Filme[];
-  idEscolha:string | undefined;
-  idUser:string | undefined;
-  
+  generos: Genero[] = [];
+  filmesSelecionados: Filme[] = [];
+  idUser: string | undefined;
 
-    constructor(
-      private cadastroService: CadastroService,
-      private movieService: ApiService,
-      private router: Router,
-      private estadoService: EstadoService,
-      @Inject(PLATFORM_ID) private platformId: Object
-    ) {
-      this.generos = this.cadastroService.generos;
-      this.filmesSelecionados = this.cadastroService.filmesSelecionados;
+  meusDados: DadosPagina | null = null;
+  filmesIndicados: Filme[] = [];
+  filmesGeneros: Filme[] = [];
+  filmesTops: Filme[] = [];
+  filmesAvaliados: Filme[] = [];
 
-      if (isPlatformBrowser(this.platformId)) {
-        const dados = this.cadastroService.dadosCadastro;
-        if (dados && dados.idUser) {
-          this.idUser = dados.idUser;
-        } else {
-          console.warn('⚠️ dadosCadastro ou idUser está vazio.');
-        }
+  @ViewChild('popup', { static: false }) popupComponent!: FilmePopupComponent;
+
+  constructor(
+    private cadastroService: CadastroService,
+    private movieService: ApiService,
+    private router: Router,
+    private estadoService: EstadoService,
+    @Inject(PLATFORM_ID) private platformId: Object
+  ) {
+    this.generos = this.cadastroService.generos;
+    this.filmesSelecionados = this.cadastroService.filmesSelecionados;
+
+    if (isPlatformBrowser(this.platformId)) {
+      const dados = this.cadastroService.dadosCadastro;
+      if (dados?.idUser) {
+        this.idUser = dados.idUser;
+      } else {
+        console.warn('⚠️ dadosCadastro ou idUser está vazio.');
       }
     }
-
-    meusDados: DadosPagina | null = null;
-
-    filmesIndicados: Filme[] = [];
-    filmesGeneros: Filme[] = [];
-    filmesTops: Filme[] = [];
-    filmesAvaliados: Filme[] = [];
+  }
 
   ngOnInit(): void {
-    console.log(this.estadoService.dadosPagina)
     if (this.estadoService.dadosPagina) {
-      console.log("aqui")
-      this.meusDados = this.estadoService.dadosPagina as DadosPagina;
-      this.filmesIndicados = this.meusDados.filmesIndicados || [];
-      this.filmesTops = this.meusDados.filmesTops || [];
-      this.filmesGeneros = this.meusDados.filmesGeneros || [];
-      this.filmesAvaliados = this.meusDados.filmesAvaliados || [];
-    } else if (this.idUser) {
-      console.log("aqui")
-      this.CarregarFilmes();
+      const dados = this.estadoService.dadosPagina as DadosPagina;
+      this.meusDados = dados;
+      this.filmesIndicados = dados.filmesIndicados || [];
+      this.filmesTops = dados.filmesTops || [];
+      this.filmesGeneros = dados.filmesGeneros || [];
+    }
+
+    if (this.idUser) {
+      this.CarregarFilmesAvaliados();
     }
   }
-  salvarEstado() {
+
+  salvarEstado(): void {
     this.estadoService.dadosPagina = this.meusDados;
   }
 
-  atualizarMeusDados() {
-  this.meusDados = {
-    filmesTops: this.filmesTops,
-    filmesIndicados: this.filmesIndicados,
-    filmesGeneros: this.filmesGeneros,
-    filmesAvaliados: this.filmesAvaliados,
-  };
-  this.salvarEstado();
-}
+  atualizarMeusDados(): void {
+    this.meusDados = {
+      filmesIndicados: this.filmesIndicados,
+      filmesTops: this.filmesTops,
+      filmesGeneros: this.filmesGeneros,
+    };
+    this.salvarEstado();
+  }
 
-CarregarFilmes() {
+CarregarFilmesAvaliados(): void {
   if (!this.idUser) return;
 
-  this.movieService.get_preference(this.idUser).subscribe((preferencias: PreferenciaFilme[]) => {
-    const filmesIds: number[] = preferencias.map(p => p.filme_id);
-    console.log('Preferências recebidas:', preferencias);
+  this.movieService.get_avaliacoes_usuario(Number(this.idUser)).subscribe((avaliacoes: any) => {
+    const lista = avaliacoes.avaliacoes || [];
 
-    if (!filmesIds.length) {
+    if (!lista.length) {
       this.filmesAvaliados = [];
       return;
     }
 
-    const request: Observable<Filme>[] = filmesIds.map((id: number) =>
-      this.movieService.get_film_by_id(id.toString())
+    const filmesIds: string[] = lista.map(
+      (a: { id_filme_tmdb: number }) => a.id_filme_tmdb.toString()
     );
 
-    forkJoin<Filme[]>(request).subscribe((filmes: Filme[]) => {
-      this.filmesAvaliados = filmes;
-      this.atualizarMeusDados();
+    const requests: Observable<Filme>[] = filmesIds.map((id: string) =>
+      this.movieService.get_film_by_id(id)
+    );
+
+    console.log('IDs para buscar:', filmesIds);
+
+    forkJoin(requests).subscribe({
+      next: (filmes: Filme[]) => {
+        // Garantir que seja um array plano de objetos Filme
+        this.filmesAvaliados = filmes.flat().filter(Boolean);
+        console.log('Filmes avaliados finais:', this.filmesAvaliados);
+      },
+      error: (err) => {
+        console.error('Erro ao buscar filmes por ID:', err);
+      }
     });
   });
 }
 
-  @ViewChild('popup', { static: false }) popupComponent!: FilmePopupComponent;
-  abrirPopup(filme: any) {
+  abrirPopup(filme: any): void {
+    console.log('Abrindo popup do filme:', filme);
     if (!filme?.id_filme_tmdb) {
       console.error('Filme inválido ou sem ID', filme);
       return;

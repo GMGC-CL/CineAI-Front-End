@@ -18,8 +18,11 @@
     <h2>Sua Bibliotecas de Filmes:</h2>
     <div class="movie-grid">
       <div class="movie-card" *ngFor="let filme of filmesAvaliados" (click)="abrirPopup(filme)"
-        [ngStyle]="{'background-image': 'url(' + 'https://image.tmdb.org/t/p/w500' + filme.caminho_poster + ')', 
-        'background-size': 'cover', 'background-position': 'center'}">
+        [ngStyle]="{
+          'background-image': 'url(https://image.tmdb.org/t/p/w500' + filme.caminho_poster + ')',
+          'background-size': 'cover',
+          'background-position': 'center'
+        }">
       </div>
     </div>
   </section>
